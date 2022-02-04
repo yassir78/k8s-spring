@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-service-config
+data:
+  BD_URL: common-db-service
+  MYSQL_DATABASE: booker-common
+  KAFKA_URL: my-release-kafka-0.my-release-kafka-headless.default.svc.cluster.local:9092

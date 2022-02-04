@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payment-service-config
+data:
+  BD_URL: payment-db-service
+  MYSQL_DATABASE: booker-payment
+  KAFKA_URL: my-release-kafka-0.my-release-kafka-headless.default.svc.cluster.local:9092

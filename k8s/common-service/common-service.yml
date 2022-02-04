@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: common-service-app-deployment
+  labels:
+    app: common-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: common-service-app
+  template:
+    metadata:
+      labels:
+        app: common-service-app
+    spec:
+      containers:
+        - name: common-service-app
+          image: chaosmaker/booker-common-service:0.0.7
+          ports:
+            - containerPort: 9096
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: common-service-secret
+                  key: USER_LOGIN
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: common-service-secret
+                  key: USER_PWD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: common-service-config
+                  key: MYSQL_DATABASE
+            - name: BD_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: common-service-config
+                  key: BD_URL
+            - name: KAFKA_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: common-service-config
+                  key: KAFKA_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: common-service-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: common-service-app
+  ports:
+    - protocol: TCP
+      port: 9096
+      targetPort: 9096

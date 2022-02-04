@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service-app
+  labels:
+    app: gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-service
+  template:
+    metadata:
+      labels:
+        app: gateway-service
+    spec:
+      containers:
+        - name: gateway-service
+          image: chaosmaker/booker-gateway-service:0.0.4
+          ports:
+            - containerPort: 9093
+          env:
+            - name: EUREKA_SERVER_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: gateway-service-config
+                  key: eureka_service_address
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service-svc
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 9093
+      protocol: TCP
+  selector:
+    app: gateway-service

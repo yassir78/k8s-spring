@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/booker-account-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/booker-catalogue-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/booker-common-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/booker-config-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/booker-eureka-service-registry" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/booker-expose-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/booker-order-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/booker-payment-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/booker-zipkin-server" vcs="Git" />
+  </component>
+</project>

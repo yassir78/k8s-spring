@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-common-deployment
+  labels:
+    app: mysql-common
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-common
+  template:
+    metadata:
+      labels:
+        app: mysql-common
+    spec:
+      containers:
+        - name: mysql-common
+          image: mysql:8
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: common-service-secret
+                  key: USER_LOGIN
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: common-service-secret
+                  key: USER_PWD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: common-service-config
+                  key: MYSQL_DATABASE
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: common-service-secret
+                  key: ROOT_PWD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: common-db-service
+spec:
+  type: ClusterIP
+  selector:
+    app: mysql-common
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306

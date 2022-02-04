@@ -1,0 +1,1 @@
+podname-${replica-index}.{serviceName}.default.svc.default.local
